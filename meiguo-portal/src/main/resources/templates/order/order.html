@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>首页</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+</head>
+<body>
+<!--头部切换-->
+<div id="focus" class="focus">
+	<div class="title">
+		<!-- <a  href="/owner/shoudingwei"><img class="fl" src="/img/index-add.png" alt=""/></a> -->
+		<span>银网物业</span>
+		<a  href="/information/msg"><img class="fr" src="/img/index-msg.png" alt="购物车"/></a>
+	</div>
+</div>
+<form id="signupForm">
+		<div class="Top">
+			<a href="/owner/userPlot"><span>&nbsp;</span></a>新增房屋
+		</div>
+
+		  <div th:each="op,in:${oplist}">
+			
+			<input type="hidden" name="list[0].productSpecName" th:value="${op.productSpecName}">
+			<input type="hidden" name="list[0].picImg" th:value="${op.picImg}">
+			<input type="hidden" name="list[0].price" th:value="${op.price}">
+			<input type="hidden" name="list[0].buyNumber" th:value="${op.buyNumber}">
+			<input type="hidden" name="list[0].goodsId" th:value="${op.goodsId}">
+			<input type="hidden" name="list[0].name" th:value="${op.name}">
+			
+			<span><img alt="" th:src="${op.picImg}" width="50" height="50"/></span>
+			<span th:text="${op.productSpecName}" style="font-size: 15px;"></span>
+			<span th:text="'￥  '+${op.price}" style="font-size: 15px;color: red"></span>
+			<span style="font-size: 15px;"></span>
+			<span th:text="'购买量 '+${op.buyNumber}" style="font-size: 15px;"></span>
+		  </div>
+		<div class="fangwu-add-txt bg-white" id="fangzhudiv">
+			<ul>
+				<li><span>收货人</span><em><input id="consignee"  name="consignee"  type="text" th:value="${orderDO.consignee}"></em></li>
+			
+				<li><span>联系电话</span><em><input id="mobile"  name="mobile"  type="text" th:value="${orderDO.mobile}"></em></li>
+				<li><span>收货地址</span><em><input id="address"  name="address"  type="text" th:value="${orderDO.address}"></em><a href="/information/address/list"><span style="font-size: 16px">></span></a></li>
+				
+			<!-- 	<li><span>售后服务</span><em><input id="identityCard"  name="identityCard"  type="text"></em>
+				<li><span>店铺优惠</span><em><input id="identityCard" name="identityCard"  type="text"></em> -->
+				<li><span>快递费</span><em><input id="shipmentAmount"  name="shipmentAmount"  type="text"></em></li>
+				<li><span>订单金额</span><em><input id="orderAmount" name="orderAmount"  type="text" th:value="${orderDO.orderAmount}"></em></li>
+				<li><span>支付金额</span><em><input id="payAmount"  name="payAmount"  type="text"></em>
+			<!-- 	<li><span>发票</span><em><input id="identityCard" maxlength="18" name="identityCard"  type="text"></em>
+				<li><span>买家留言</span><em><input id="identityCard" maxlength="18" name="identityCard"  type="text"></em> -->
+				<li><span>支付方式</span><select name="payType">
+											<option value="0">积分兑换</option>
+											<option value="1">在线支付</option>
+										</select>
+				</li>
+			</ul>
+		</div>
+		<input class="tijiao font-32" id="saveplot" onclick="save()" type="button" value="提交">
+		</form>
+  <script th:inline="javascript">
+    $("#shipmentAmount").blur(function(){
+    	var shipmentAmount=$(this).val();
+    	if(shipmentAmount=='')
+    		shipmentAmount=0;
+    	else
+    		shipmentAmount=parseInt(shipmentAmount);
+    	
+    	$("#payAmount").val(parseInt($("#orderAmount").val())+shipmentAmount);
+    });
+  
+  </script>
+  <script type="text/javascript" src="/js/order/order.js"></script>
+  
+</body>
+</html>
+
+
+
+
+
+
